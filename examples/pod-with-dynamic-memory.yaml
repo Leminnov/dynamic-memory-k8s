@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dynamic-memory-pod
+  annotations:
+    # This annotation indicates that the pod requests dynamic memory
+    dynamic-memory.kubernetes.io/request: "true"
+spec:
+  containers:
+  - name: main-container
+    image: nginx:latest
+    resources:
+      limits:
+        # This specifies the maximum amount of memory the container can use,
+        # including both static and dynamic memory
+        memory: "2Gi"
+      requests:
+        # This specifies the initial amount of memory requested by the container
+        memory: "1Gi"
+        # This custom resource request specifies the amount of dynamic memory
+        # that can be added to the container if needed
+        dynamic-memory.kubernetes.io/expandable: "1Gi"
+  # This toleration allows the pod to be scheduled on nodes with the DCD feature
+  tolerations:
+  - key: "dynamic-memory.kubernetes.io/dcd"
+    operator: "Exists"
+    effect: "NoSchedule"
+
+# Note: The actual implementation of dynamic memory allocation will depend on
+# the DCD controller and scheduler plugin. This YAML provides a conceptual
+# example of how a pod might request dynamic memory capabilities.

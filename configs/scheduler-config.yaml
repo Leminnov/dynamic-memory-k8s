@@ -1,0 +1,15 @@
+apiVersion: kubescheduler.config.k8s.io/v1
+kind: KubeSchedulerConfiguration
+profiles:
+  - schedulerName: dynamic-memory-scheduler
+    plugins:
+      filter:
+        enabled:
+          - name: DynamicMemory
+      score:
+        enabled:
+          - name: DynamicMemory
+    pluginConfig:
+      - name: DynamicMemory
+        args:
+          # Your plugin configuration here

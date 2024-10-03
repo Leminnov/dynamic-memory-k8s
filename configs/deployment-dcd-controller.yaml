@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dcd-controller
+  namespace: kube-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dcd-controller
+  template:
+    metadata:
+      labels:
+        app: dcd-controller
+    spec:
+      serviceAccountName: dynamic-memory-controller
+      containers:
+      - name: controller
+        image: your-registry/dcd-controller:latest
+        volumeMounts:
+        - name: config
+          mountPath: /etc/dcd-controller
+      volumes:
+      - name: config
+        configMap:
+          name: dcd-controller-config

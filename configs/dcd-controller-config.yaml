@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dcd-controller-config
+  namespace: kube-system
+data:
+  config.yaml: |
+    memoryOvercommitRatio: 1.2
+    updateInterval: 30s
+    # Add other configuration parameters as needed

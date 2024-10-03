@@ -1,0 +1,26 @@
+apiVersion: kubescheduler.config.k8s.io/v1
+kind: KubeSchedulerConfiguration
+profiles:
+  - schedulerName: dynamic-memory-scheduler
+    plugins:
+      score:
+        enabled:
+          - name: DynamicMemory
+        disabled:
+          - name: "*"
+      filter:
+        enabled:
+          - name: DynamicMemory
+        disabled:
+          - name: "*"
+    pluginConfig:
+      - name: DynamicMemory
+        args:
+          # Add any configuration parameters for the DynamicMemory plugin here
+          # For example:
+          # minMemoryRatio: 0.1
+          # maxMemoryRatio: 0.9
+
+# This configuration sets up a custom scheduler profile that uses only the DynamicMemory
+# plugin for filtering and scoring. You may need to adjust this based on your specific
+# requirements and how you want the DynamicMemory plugin to interact with other plugins.

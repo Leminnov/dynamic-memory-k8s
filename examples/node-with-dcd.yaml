@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Node
+metadata:
+  name: node-with-dcd
+  labels:
+    dynamic-memory.kubernetes.io/dcd-enabled: "true"
+  annotations:
+    # This annotation indicates the total amount of dynamic memory available on the node
+    dynamic-memory.kubernetes.io/total-capacity: "32Gi"
+    # This annotation shows the current amount of unallocated dynamic memory
+    dynamic-memory.kubernetes.io/available: "32Gi"
+spec:
+  # Standard node specifications would go here
+  # ...
+
+status:
+  capacity:
+    cpu: "8"
+    memory: "64Gi"
+    # This custom resource represents the total dynamic memory capacity
+    dynamic-memory.kubernetes.io/expandable: "32Gi"
+  allocatable:
+    cpu: "7"
+    memory: "60Gi"
+    # This represents the currently allocatable dynamic memory
+    dynamic-memory.kubernetes.io/expandable: "32Gi"
+  # Other status fields would go here
+  # ...
+
+# Note: This YAML is a conceptual representation. The actual implementation
+# of node labeling and dynamic memory reporting will depend on your
+# DCD controller and how it interacts with the Kubernetes API server.

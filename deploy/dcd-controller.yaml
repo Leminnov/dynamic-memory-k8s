@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dcd-controller
+  namespace: kube-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dcd-controller
+  template:
+    metadata:
+      labels:
+        app: dcd-controller
+    spec:
+      serviceAccountName: dcd-controller
+      containers:
+      - name: dcd-controller
+        image: your-registry/dcd-controller:latest  # Replace with your actual image
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        # Add any necessary environment variables, volume mounts, or other configurations
+
+# This Deployment creates a single instance of the DCD controller.
+# You'll need to build and push the DCD controller image to a container registry,
+# and update the image field accordingly.
+# Adjust resource limits and requests based on your controller's needs.
